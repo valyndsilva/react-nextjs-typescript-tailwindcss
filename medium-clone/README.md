@@ -146,7 +146,8 @@ It helps to pre-build the dynamic pages detemined by the slug.
 Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
 Let's create a page that lives on /post/slug
 Create inside the pages folder a folder called post and in post a file [slug].tsx
-Create the  getStaticPaths and  getStaticProps in [slug].tsx
+Create the getStaticPaths and getStaticProps in [slug].tsx
 
 Next, in medium-clone folder:
 npm install react-portable-text
+npm install react-hook-form (https://react-hook-form.com/)
