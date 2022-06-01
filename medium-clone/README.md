@@ -229,6 +229,12 @@ sanity-medium-clone/coverage
 sanity-medium-clone/logs
 sanity-medium-clone/\*.log
 
+Next, trigger vercel deploy hooks from your sanity studio folder: sanity-medium-clone
+sanity install vercel-deploy
+sanity install @sanity/dashboard
+
+
+
 Next open github and create a new repo. Ex: sanity-medium-clone-deploy
 Copy paste the remote add origin link: Ex: git remote add origin https://github.com/valyndsilva/sanity-medium-clone-deploy.git
 Open Terminal in sanity-medium-clone folder.
