@@ -76,5 +76,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       post,
     },
+    revalidate: 60, // this enables ISR and updates the old cache version after 60 seconds
   };
 };
