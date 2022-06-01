@@ -151,3 +151,93 @@ Create the getStaticPaths and getStaticProps in [slug].tsx
 Next, in medium-clone folder:
 npm install react-portable-text
 npm install react-hook-form (https://react-hook-form.com/)
+
+Create a new file createComment.ts in api folder.
+In medium-clone folder: npm install @sanity/client
+To get the SANITY_API_TOKEN:
+Open sanity.io dashboard -> API -> Tokens -> Add API Token -> Give a name and select Editor option -> Save.
+Open .env.local and add the SANITY_API_TOKEN to the file.
+
+To check your comments that are submitted in the sanity studio add the comment schema.
+Go to sanity-medium-clone -> schemas -> create comment.js:
+export default {
+name: 'comment',
+title: 'Comment',
+type: 'document',
+fields: [
+{
+name: 'name',
+type: 'string',
+},
+{
+name: 'approved',
+title: 'Approved',
+type: 'boolean',
+description: "Comments won't show on the site without approval",
+},
+{
+name: 'email',
+type: 'string',
+},
+{
+name: 'comment',
+type: 'text',
+},
+{
+name: 'post',
+type: 'reference',
+to: [
+{
+type: 'post',
+},
+],
+},
+],
+};
+
+In schema.js:
+import comment from './comment' and add comment in schemaTypes.concat
+
+Add the interface def for comment in typings.d.ts:
+export interface Comment {
+approved: boolean;
+comment: string;
+email: string;
+name: string;
+post: {
+\_\_ref: string;
+\_type: string;
+};
+\_createdAt: string;
+\_id: string;
+\_rev: string;
+\_type: string;
+\_updatedAt: string;
+}
+
+Deploy the sanity studio online so it can be accessed from anywhere:
+cd sanity-medium-clone
+sanity deploy
+Give a studio hostname: sanity-studio-medium-clone
+It's deployed to: https://sanity-studio-medium-clone.sanity.studio/
+
+Next, we need to deploy the NextJS app to github:
+Open .gitignore and add:
+sanity-medium-clone/node_modules
+sanity-medium-clone/dist
+sanity-medium-clone/coverage
+sanity-medium-clone/logs
+sanity-medium-clone/\*.log
+
+Next open github and create a new repo. Ex: sanity-medium-clone-deploy
+Copy paste the remote add origin link: Ex: git remote add origin https://github.com/valyndsilva/sanity-medium-clone-deploy.git
+Open Terminal in sanity-medium-clone folder.
+git add .
+git commit -m "comment"
+git push -u origin main
+
+Next, go to vercel.com/dashboard
+New Project
+Import Git Repository
+select the repo and Deploy
+Add the env variables to vercel

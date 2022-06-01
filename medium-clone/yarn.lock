@@ -51,7 +51,7 @@
     "@sanity/block-content-to-hyperscript" "^2.0.10"
     "prop-types" "^15.6.2"
 
-"@sanity/client@^3.2.0", "@sanity/client@^3.3.0":
+"@sanity/client@^3.2.0", "@sanity/client@^3.3.0", "@sanity/client@^3.3.1":
   "integrity" "sha512-kSnOSQaiCpdP0JnfC0MXebuQ/jM6/HCqyMdQ+/nxeqnbxHgXEWovcTP6x5Aom7485/vFdzL7NPsUrCOvye+rcA=="
   "resolved" "https://registry.npmjs.org/@sanity/client/-/client-3.3.1.tgz"
   "version" "3.3.1"

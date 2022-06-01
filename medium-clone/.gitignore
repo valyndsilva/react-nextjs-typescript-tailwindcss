@@ -5,6 +5,13 @@
 /.pnp
 .pnp.js
 
+# sanity
+sanity-medium-clone/node_modules
+sanity-medium-clone/dist
+sanity-medium-clone/coverage
+sanity-medium-clone/logs
+sanity-medium-clone/*.log
+
 # testing
 /coverage
 
