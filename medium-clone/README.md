@@ -50,6 +50,7 @@ Click on Fetch button to see the result.
 Open the Terminal:
 cd medium-clone
 npm install next-sanity
+npm install @sanity/image-url
 
 Create a new file in the root folder called .env.local
 Open sanity.json and copy the dataset and projectId values into the .env.local
@@ -83,12 +84,8 @@ export const config = {
   }
 
 Next, Open sanity.js:
-
-import {
-createImageUrlBuilder,
-createCurrentUserHook,
-createClient,
-} from 'next-sanity'
+import { createCurrentUserHook, createClient } from 'next-sanity'
+import createImageUrlBuilder from '@sanity/image-url'
 import { config } from './config'
 
 if (!config.projectId) {
@@ -141,5 +138,11 @@ body: [object]
 
 In index.tsx add the following:
 interface Props {
-posts: [Post] // importing Post from typings.d.ts   
+posts: [Post] // importing Post from typings.d.ts  
 }
+
+ISR Incremental Static Regeneration:
+It helps to pre-build the dynamic pages detemined by the slug.
+Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
+Let's create a page that lives on /post/slug
+Create inside the pages folder a folder called post and in post a file [slug].tsx

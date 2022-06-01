@@ -1,4 +1,5 @@
 module.exports = {
-  singleQuote: true,
-  semi: false,
+  singleQuote: true, // Use single quotes instead of double quotes
+  tabWidth: 2, // Number of spaces per indentation level
+  semi: true, // Print semicolons
 }
