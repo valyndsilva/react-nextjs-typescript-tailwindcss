@@ -239,5 +239,10 @@ git push -u origin main
 Next, go to vercel.com/dashboard
 New Project
 Import Git Repository
-select the repo and Deploy
-Add the env variables to vercel
+select the repo root directory: medium-clone/sanity-medium-clone
+Build and output settings:
+Build command: npm start
+Install command: npm install
+Add the Environment Variables frrom .env.local
+Deploy
+
