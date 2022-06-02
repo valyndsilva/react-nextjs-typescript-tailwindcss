@@ -178,12 +178,12 @@ posts: [Post] // importing Post from typings.d.ts
 ```
 
 ### ISR Incremental Static Regeneration:
-It helps to pre-build the dynamic pages detemined by the slug.
-Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
-Let's create a page that lives on /post/slug
-Create inside the pages folder a folder called post and in post a file [slug].tsx
-Create the getStaticPaths and getStaticProps in [slug].tsx
-getStaticProps should have revalidate to make sure to autorefresh after the time specified.
+- It helps to pre-build the dynamic pages detemined by the slug.
+- Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
+- Let's create a page that lives on /post/slug
+- Create inside the pages folder a folder called post and in post a file [slug].tsx
+- Create the getStaticPaths and getStaticProps in [slug].tsx
+- getStaticProps should have revalidate to make sure to autorefresh after the time specified.
 
 ### Next, in medium-clone folder install React-Portable-Text:
 ```
@@ -198,11 +198,11 @@ npm install @sanity/client
 ```
 
 To get the SANITY_API_TOKEN:
-Open sanity.io dashboard -> API -> Tokens -> Add API Token -> Give a name and select Editor option -> Save.
-Open .env.local and add the SANITY_API_TOKEN to the file.
+- Open sanity.io dashboard -> API -> Tokens -> Add API Token -> Give a name and select Editor option -> Save.
+- Open .env.local and add the SANITY_API_TOKEN to the file.
 
 ### To check your comments that are submitted in the sanity studio and add the comment schema.
-Go to sanity-medium-clone -> schemas -> create comment.js:
+- Go to sanity-medium-clone -> schemas -> create comment.js:
 ```
 export default {
 name: 'comment',
