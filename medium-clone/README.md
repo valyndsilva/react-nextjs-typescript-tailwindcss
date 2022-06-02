@@ -1,5 +1,5 @@
 # Meduim Clone 
-![Preview](https://react-nextjs-typescript-tailwindcss-medium-clone.vercel.app/)
+[Preview](https://react-nextjs-typescript-tailwindcss-medium-clone.vercel.app/)
 
 ## Tech Stack Used:
 React
