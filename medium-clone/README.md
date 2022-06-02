@@ -10,10 +10,12 @@
 - GROQ
 
 ## Scripts used:
-- npx create-next-app --example with-tailwindcss medium-clone
-- npm install -g @sanity/cli
-- sanity init --coupon sonny2022
-- npm run dev
+```
+npx create-next-app --example with-tailwindcss medium-clone
+npm install -g @sanity/cli
+sanity init --coupon sonny2022
+npm run dev
+```
 
 ## Implementation
 ### To run the sanity studio locally, run the following command:
