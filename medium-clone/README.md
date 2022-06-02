@@ -15,6 +15,7 @@
 - sanity init --coupon sonny2022
 - npm run dev
 
+## Implementation
 ### To run the sanity studio locally, run the following command:
 - cd sanity-medium-clone
 - sanity-login
@@ -57,20 +58,20 @@ Next, install ESLint using npm:
 - You should then set up a configuration file:
 - npm init @eslint/config
 
-Create a new file in the root folder called .env.local
+### Create a new file in the root folder called .env.local
 Open sanity.json and copy the dataset and projectId values into the .env.local
-Ex:
-NEXT_PUBLIC_SANITY_DATASET=dataset-value
-NEXT_PUBLIC_SANITY_PROJECT_ID=projectId-value
 
-Next, create a new folder in the root folder called lib and 2 files in it:
+Ex:
+- NEXT_PUBLIC_SANITY_DATASET=dataset-value
+- NEXT_PUBLIC_SANITY_PROJECT_ID=projectId-value
+
+### Next, create a new folder in the root folder called "lib" and 2 files in it:
 sanity.js and config.js
 
 Open config.js:
 
-export const config = {
-/\*\*
-
+- export const config = {
+/**
 - Find your project ID and dataset in `sanity.json` in your studio project.
 - These are considered “public”, but you can use environment variables
 - if you want differ between local dev and production.
@@ -84,11 +85,12 @@ export const config = {
 - Set useCdn to `false` if your application require the freshest possible
 - data always (potentially slightly slower and a bit more expensive).
 - Authenticated request (like preview) will always bypass the CDN
-  \*\*/
+  **/
   useCdn: process.env.NODE_ENV === 'production',
   }
 
 Next, Open sanity.js:
+
 import { createCurrentUserHook, createClient } from 'next-sanity'
 import createImageUrlBuilder from '@sanity/image-url'
 import { config } from './config'
@@ -97,19 +99,19 @@ if (!config.projectId) {
 throw Error('The Project ID is not set. Check your environment variables.')
 }
 
-// Set up client for fetching data in the getProps page functions
+#### Set up client for fetching data in the getProps page functions
 export const sanityClient = createClient(config)
 
-// Set up a helper function for generating Image URLs (extracting URL from the image) with only the asset reference data in your documents. Read more: https://www.sanity.io/docs/image-url
+#### Set up a helper function for generating Image URLs (extracting URL from the image) with only the asset reference data in your documents. Read more: https://www.sanity.io/docs/image-url
 export const urlFor = (source) => createImageUrlBuilder(config).image(source)
 
-// Helper function for using the current logged in user account
+#### Helper function for using the current logged in user account
 export const useCurrentUser = createCurrentUserHook(config)
 
 On the Homepage (index.tsx) page we implement Server Side Rendering: So anytime someone visits the homepage it renders per request.
 Basically it means the page is built on the server (next.js) per request and delivers the page to the client side ready.
 
-// Implementing SSR (index.tsx)
+### Implementing SSR (index.tsx)
 export const getServerSideProps = async () => {
 //This is where the server pre-builds the pages
 // It changes the homepage route to SSR route
@@ -123,7 +125,7 @@ posts,
 }
 }
 
-Create a new file for type definitions called typings.d.ts in the root folder:
+### Create a new file for type definitions called "typings.d.ts" in the root folder:
 export interface Post {
 // Refer to sanity query result to get the properties of the post
 \_id: string
@@ -146,24 +148,25 @@ interface Props {
 posts: [Post] // importing Post from typings.d.ts  
 }
 
-ISR Incremental Static Regeneration:
+### ISR Incremental Static Regeneration:
 It helps to pre-build the dynamic pages detemined by the slug.
 Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
 Let's create a page that lives on /post/slug
 Create inside the pages folder a folder called post and in post a file [slug].tsx
 Create the getStaticPaths and getStaticProps in [slug].tsx
+getStaticProps should have revalidate to make sure to autorefresh after the time specified.
 
-Next, in medium-clone folder:
+### Next, in medium-clone folder install React-Portable-Text:
 npm install react-portable-text
 npm install react-hook-form (https://react-hook-form.com/)
 
-Create a new file createComment.ts in api folder.
+### Create a new file createComment.ts in api folder.
 In medium-clone folder: npm install @sanity/client
 To get the SANITY_API_TOKEN:
 Open sanity.io dashboard -> API -> Tokens -> Add API Token -> Give a name and select Editor option -> Save.
 Open .env.local and add the SANITY_API_TOKEN to the file.
 
-To check your comments that are submitted in the sanity studio add the comment schema.
+### To check your comments that are submitted in the sanity studio and add the comment schema.
 Go to sanity-medium-clone -> schemas -> create comment.js:
 export default {
 name: 'comment',
@@ -200,7 +203,7 @@ type: 'post',
 ],
 };
 
-In schema.js:
+#### In schema.js:
 import comment from './comment' and add comment in schemaTypes.concat
 
 ### Add the interface definitions for comment in typings.d.ts:
@@ -221,9 +224,9 @@ post: {
 }
 
 ### Deploy the sanity studio online so it can be accessed from anywhere:
-cd sanity-medium-clone
-sanity deploy
-Give a studio hostname: sanity-studio-medium-clone
+- cd sanity-medium-clone
+- sanity deploy
+- Give a studio hostname: sanity-studio-medium-clone
 It's deployed to: https://sanity-studio-medium-clone.sanity.studio/
 
 ### Deploy the NextJS app to github and trigger vercel deploy hooks:
