@@ -2,26 +2,26 @@
 [Preview](https://react-nextjs-typescript-tailwindcss-medium-clone.vercel.app/)
 
 ## Tech Stack Used:
-React
-TypeScript
-NextJS
-Tailwind CSS
-Sanity CMS
-GROQ
+- React
+- TypeScript
+- NextJS
+- Tailwind CSS
+- Sanity CMS
+- GROQ
 
 ## Scripts used:
-npx create-next-app --example with-tailwindcss medium-clone
-npm install -g @sanity/cli
-sanity init --coupon sonny2022
-npm run dev
+- npx create-next-app --example with-tailwindcss medium-clone
+- npm install -g @sanity/cli
+- sanity init --coupon sonny2022
+- npm run dev
 
 ### To run the sanity studio locally, run the following command:
-cd sanity-medium-clone
-sanity-login
-sanity start (This runs the local sanity studio)
-Go to http://localhost:3333
-Select Desk tab and you can see the different schemas available
-Create a few posts in the Desk tab
+- cd sanity-medium-clone
+- sanity-login
+- sanity start (This runs the local sanity studio)
+- Go to http://localhost:3333
+- Select Desk tab and you can see the different schemas available
+- Create a few posts in the Desk tab
 
 ### To add a custom field open sanity-medium-clone/schemas/post.js and add:
 {
@@ -48,14 +48,14 @@ mainImage
 Click on Fetch button to see the result.
 
 Open the Terminal:
-cd medium-clone
-npm install next-sanity
-npm install @sanity/image-url
+- cd medium-clone
+- npm install next-sanity
+- npm install @sanity/image-url
 
 Next, install ESLint using npm:
-npm install eslint --save-dev
+- npm install eslint --save-dev
 You should then set up a configuration file:
-npm init @eslint/config
+- npm init @eslint/config
 
 Create a new file in the root folder called .env.local
 Open sanity.json and copy the dataset and projectId values into the .env.local
