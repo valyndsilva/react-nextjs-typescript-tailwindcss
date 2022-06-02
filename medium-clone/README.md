@@ -52,6 +52,11 @@ cd medium-clone
 npm install next-sanity
 npm install @sanity/image-url
 
+You can install ESLint using npm:
+npm install eslint --save-dev
+You should then set up a configuration file:
+npm init @eslint/config
+
 Create a new file in the root folder called .env.local
 Open sanity.json and copy the dataset and projectId values into the .env.local
 Ex:
