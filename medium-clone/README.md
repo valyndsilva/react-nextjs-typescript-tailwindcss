@@ -277,10 +277,20 @@ Add the Environment Variables frrom .env.local
 Deploy
 
 Step 4: Adding CORS credentials to your Sanity project.
+Via the command line interface:
 Once Sanity Studio is deployed, you will need to add it's URL to Sanity’s CORS origins settings. You can do this from the command line:
 
 sanity cors add https://your-url.vercel.app --credentials
 
+You can confirm your origin was added with the statement CORS origin added successfully or by consulting the list returned by the command sanity cors list.
+
 OR
 
-Alternatively, you can navigate to manage.sanity.io, find your project and under Settings > API, add the Studio URL to the CORS origins list. You should allow credentials as the Studio requires authentication for added security whereas most frontends do not.
+Via your management console:
+To add a CORS origin from your management console:
+
+Go to https://www.sanity.io/manage
+Pick your project from the list
+Go to Settings, and then to API settings
+Under CORS Origins, click the Add CORS origin button
+Enter your Origin, select whether or not to Allow credentials, and click Save. If your origin was added successfully, it will appear at the top of your CORS origins list.
