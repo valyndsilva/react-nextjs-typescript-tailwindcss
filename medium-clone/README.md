@@ -269,7 +269,7 @@ After saving your package.json file you will be ready to deploy your project.
 
 Step 3: Deploy With Vercel
 Open, vercel.com/dashboard
-New Project
+New Project: 
 Import Git Repository
 select the repo root directory: medium-clone
 select framework: Next.js
