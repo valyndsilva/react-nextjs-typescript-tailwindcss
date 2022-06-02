@@ -233,22 +233,49 @@ Next, trigger vercel deploy hooks from your sanity studio folder: sanity-medium-
 sanity install vercel-deploy
 sanity install @sanity/dashboard
 
+Deploying Sanity Studio with Vercel:
+Next, go to https://vercel.com/guides/deploying-sanity-studio-with-vercel
 
+Step 1: Setting Up your Sanity Studio Project
+Note: You can skip this step if you already have a project set up.
+npm i -g @sanity/cli
+sanity init (To initiate a new project and download the Studio code to your computer)
+sanity start (To start a local development server, cd into the project folder)
 
-Next open github and create a new repo. Ex: sanity-medium-clone-deploy
-Copy paste the remote add origin link: Ex: git remote add origin https://github.com/valyndsilva/sanity-medium-clone-deploy.git
-Open Terminal in sanity-medium-clone folder.
-git add .
-git commit -m "comment"
-git push -u origin main
+Step 2: Preparing for Deployment
+To provide Vercel with routing information for the app, add a vercel.json file with the following content in the root directory medium-clone:
+{
+"version": 2,
+"rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
 
-Next, go to vercel.com/dashboard
+Add the following scripts to the Studio’s package.json file i.e sanity-medium-clone folder:
+{
+...
+"scripts": {
+"start": "sanity start",
+"test": "sanity check",
+"build": "sanity build public -y"
+}
+}
+
+Lastly, add @sanity/cli as a development dependency, this will allow Vercel to build your project on deployment.
+After saving your package.json file you will be ready to deploy your project.
+
+Step 3: Deploy With Vercel
+Open, vercel.com/dashboard
 New Project
 Import Git Repository
-select the repo root directory: medium-clone/sanity-medium-clone
-Build and output settings:
-Build command: npm start
-Install command: npm install
+select the repo root directory: medium-clone
+select framework: Next.js
 Add the Environment Variables frrom .env.local
 Deploy
 
+Step 4: Adding CORS credentials to your Sanity project.
+Once Sanity Studio is deployed, you will need to add it's URL to Sanity’s CORS origins settings. You can do this from the command line:
+
+sanity cors add https://your-url.vercel.app --credentials
+
+OR
+
+Alternatively, you can navigate to manage.sanity.io, find your project and under Settings > API, add the Studio URL to the CORS origins list. You should allow credentials as the Studio requires authentication for added security whereas most frontends do not.
