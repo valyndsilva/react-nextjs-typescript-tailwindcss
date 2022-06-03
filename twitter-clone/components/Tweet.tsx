@@ -69,20 +69,28 @@ function Tweet({ tweet }: Props) {
         </div>
       </div>
       {comments?.length > 0 && (
-        <div>
+        <div className="my-2 mt-5 max-h-44 space-y-5 overflow-y-scroll border-t border-gray-100 p-5">
           {comments.map((comment) => (
-            <div key={comment._id}>
+            <div key={comment._id} className="relative flex space-x-2">
+              <hr className="absolute left-5 top-10 h-8 border-x border-twitter/30" />
               <img
                 src={comment.profileImage}
                 alt=""
                 className="h-7 w-7 rounded-full object-cover"
               />
               <div>
-                <div>
-                  <p>{comment.username}</p>
-                  <p>@{comment.username.replace(/\s+/g, '').toLowerCase()} ·</p>
+                <div className="flex items-center space-x-1">
+                  <p className="mr-1 font-bold">{comment.username}</p>
+                  <p className="hidden text-sm text-gray-500 lg:inline">
+                    @{comment.username.replace(/\s+/g, '').toLowerCase()} ·
+                  </p>
                 </div>
+                <TimeAgo
+                  className="text-sm text-gray-500"
+                  date={comment._createdAt}
+                />
               </div>
+              <p>{comment.comment}</p>
             </div>
           ))}
         </div>

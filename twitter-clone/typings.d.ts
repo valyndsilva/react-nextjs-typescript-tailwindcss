@@ -24,6 +24,7 @@ export type CommentBody = {
   username: string;
   profileImage: string;
   image?: string;
+  comment: string;
 };
 
 export interface Comment extends CommentBody {
