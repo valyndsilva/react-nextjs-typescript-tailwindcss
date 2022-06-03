@@ -523,3 +523,102 @@ className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hov
 export default TweetBox;
 
 ```
+
+### To Add a Tweet:
+
+Create an endpoint addTweet.tsx in api folder:
+
+```
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { TweetBody } from '../../typings';
+type Data = {
+  message: string;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  const data: TweetBody = JSON.parse(req.body);
+  // mutations sends instruction to the backend and tells the backend how to update the data
+  // https://www.sanity.io/docs/http-mutations
+  const mutations = {
+    mutations: [
+      {
+        create: {
+          _type: 'tweet',
+          text: data.text,
+          username: data.username,
+          blockTweet: false,
+          profileImage: data.profileImage,
+          image: data.image,
+        },
+      },
+    ],
+  };
+  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
+  const result = await fetch(apiEndpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`,
+    },
+    body: JSON.stringify(mutations),
+    method: 'POST',
+  });
+  const json = await result.json();
+  res.status(200).json({ message: 'Tweet Added' });
+}
+```
+
+Next, open TweetBox.tsx to use the addTweet functionality:
+
+```
+    const postTweet = async () => {
+    const tweetInfo: TweetBody = {
+      text: input,
+      username: session?.user?.name || 'Unkown user',
+      profileImage: session?.user?.image || '/avatar-icon.jpeg',
+      image: image,
+    };
+    const result = await fetch('/api/addTweet', {
+      body: JSON.stringify(tweetInfo), // strigify the JS object to be sent
+      method: 'POST',
+    });
+    const data = await result.json();
+    const newTweets = await fetchTweets();
+    setTweets(newTweets);
+
+    toast('Tweet Posted!', {
+      icon: '🚀',
+    });
+    return data;
+  };
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    postTweet();
+    setInput('');
+    setImage('');
+    setImageUrlBoxIsOpen(false);
+  };
+
+  return (
+    ...
+      <button
+              onClick={handleSubmit}
+              disabled={!input || !session}
+              className="bg-twitter rounded-full px-5 py-2 font-bold text-white disabled:opacity-40"
+            >
+              Tweet
+            </button>
+            ...
+  )
+
+}
+
+export default TweetBox;
+```
+
+Test the TweetBox. It should work :)
+
+Bascially when you click on Tweet it sends the POST request information in a req.body which mutates the Sanity platform backend and adds in the new document i.e the new Tweet. Next, we refetch the documents and see a re-render
