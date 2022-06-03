@@ -253,3 +253,28 @@ yarn add --dev @types/react-timeago
 Create a new component called Tweet.tsx.
 Import it in Feed.tsx as TweetComponent to avoid clash with Tweet typings:
 import TweetComponent from '../components/Tweet';
+
+Update the typings.d.ts with type CommentBody and interface Comment:
+
+```
+export type CommentBody = {
+  text: string;
+  username: string;
+  profileImage: string;
+  image?: string;
+};
+
+export interface Comment extends CommentBody {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  _type: string;
+  tweet: {
+    _ref: string;
+    _type: 'reference';
+  };
+}
+```
+
+Next create a new file api/getComments.ts and utils/fetchComments.tsx

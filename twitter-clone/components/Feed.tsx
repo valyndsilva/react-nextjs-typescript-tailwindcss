@@ -8,6 +8,7 @@ interface Props {
   tweets: Tweet[];
 }
 function Feed({ tweets }: Props) {
+  console.log(tweets);
   return (
     <div className="col-span-7 border-x lg:col-span-5">
       <div className="flex items-center justify-between">

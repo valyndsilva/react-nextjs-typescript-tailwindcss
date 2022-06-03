@@ -18,3 +18,22 @@ export interface Tweet extends TweetBody {
   _type: string;
   blockTweet: boolean;
 }
+
+export type CommentBody = {
+  text: string;
+  username: string;
+  profileImage: string;
+  image?: string;
+};
+
+export interface Comment extends CommentBody {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  _type: string;
+  tweet: {
+    _ref: string;
+    _type: 'reference';
+  };
+}

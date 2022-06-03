@@ -17,9 +17,9 @@ export default {
       name: 'profileImage',
       title: 'Profile image',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      // options: {
+      //   hotspot: true,
+      // },
     },
     {
       name: 'tweet',
@@ -29,10 +29,4 @@ export default {
       to: [{ type: 'tweet' }],
     },
   ],
-  preview: {
-    select: {
-      title: 'name',
-      media: 'image',
-    },
-  },
 };
