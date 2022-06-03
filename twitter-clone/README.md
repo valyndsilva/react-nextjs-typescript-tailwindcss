@@ -246,6 +246,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 ```
 
-Create a new component called Tweet.tsx
+Import react-timeago into root directory
+yarn add react-timeago
+yarn add --dev @types/react-timeago
+
+Create a new component called Tweet.tsx.
 Import it in Feed.tsx as TweetComponent to avoid clash with Tweet typings:
 import TweetComponent from '../components/Tweet';
