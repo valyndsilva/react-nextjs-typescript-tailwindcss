@@ -293,5 +293,163 @@ import { Toaster } from 'react-hot-toast';
 Place <Toaster/> component after Head component
 ```
 
-In Feed.tsx implement the toast:
+In Feed.tsx implement the toast :
 
+```
+import toast from 'react-hot-toast';
+
+In the handleRefresh:
+  const handleRefresh = async () => {
+    const refreshToast = toast.loading('Refreshing...');
+    const tweets = await fetchTweets();
+    setTweets(tweets);
+    toast.success('Feed Updated!', {
+      id: refreshToast,
+    });
+  };
+```
+
+## Implemnt Twitter Login using NextAuth:
+
+```
+yarn add next-auth
+```
+
+### Add API route
+
+To add NextAuth.js to the project create a file called [...nextauth].js in pages/api/auth.
+Copy the example and get onfrom there.(https://next-auth.js.org/getting-started/example)
+
+### Configure Shared session state:
+
+Open pages/\_app.tsx:
+Wrap <SessionProvider  session={session}></SessionProvider>, at the top level of your application around <Component {...pageProps} /> and destructure pageProps: { session, ...pageProps },
+
+### Frontend - Add React Hook:
+
+The useSession() React Hook in the NextAuth.js client is the easiest way to check if someone is signed in.
+You can use the useSession hook from anywhere in your application (e.g. in a header component).
+
+Open Sidebar.tsx and update.
+
+```
+import { useSession, signIn, signOut } from "next-auth/react"
+
+function Sidebar() {
+  const { data: session } = useSession();
+
+  return (
+...
+ <SidebarRow
+        onClick={session ? signOut : signIn}
+        Icon={UserIcon}
+        title={session ? 'Sign Out' : 'Sign In'}
+      />
+)
+
+```
+
+Open .env.local and add NEXT_AUTH_SECRET and NEXTAUTH_URL (very important step):
+
+```
+NEXTAUTH_SECRET=value you can define
+NEXTAUTH_URL=value same as NEXT_PUBLIC_BASE_URL (this should be changed to the url after deployment)
+```
+
+### Create a Twitter OAuth app:
+
+Go to Twitter Developer platform and sign up/login.
+Add App name: sanity-twitter-clone
+Save the API Key, API Key Secret and Bearer Token somewhere safe as you won't be able to see it again.
+Next, Go to the dashboard => Project & Apps => sanity-twitter-clone
+Under "User authentication settings" => Set up => Enable OAuth 2.0
+Type of App: Single page App
+Callback URI / Redirect URL: http://localhost:3000/api/auth/callback/twitter (this will change to your deployed URL)
+Website URL: http://test.com (this will change to your deployed URL)
+Save
+Save the Client ID and Client Secret in a safe place.
+
+Open .env.local file and add:
+
+```
+TWITTER_CLIENT_ID=value
+TWITTER_CLIENT_SECRET=value
+```
+
+Restart next dev server in root directory evrytime changes are made to the .env.local file:
+yarn run dev
+
+### Create a Github OAuth app:
+
+To get Github Client ID and Secret Login to Github:
+Settings => Developer Settings => OAuth Apps => New OAuth App
+App Name: NextAuth Twitter Integration App
+Homepage URL: https://localhost:3000 (this will change to your deployed URL)
+Authorization callback URL: http://localhost:3000/api/auth/callback/github (this will change to your deployed URL)
+Register Application => Generate the Client Secret.
+Open .env.local file and add:
+
+```
+GITHUB_CLIENT_ID=value
+GITHUB_CLIENT_SECRET=value
+```
+
+Restart next dev server in root directory evrytime changes are made to the .env.local file:
+yarn run dev
+
+### Create a Google OAuth app:
+
+To allow users to log in to our app using their Google account, we have to obtain OAuth 2.0 client credentials from the [Google API Console] (https://console.developers.google.com/).
+First you need to create the OAuth Consent screen:
+App name: NextAuth Twitter Integration
+User support email: valyndsilva@gmail.com
+App logo: Leave empty
+App home page: http://localhost:3000 (this will change to your deployed URL)
+Authorized domain 1: test.com (this will change to your deployed URL)
+Email addresses: valyndsilva@gmail.com
+
+Next, navigate to Credentials => Create credentials => OAuth client ID
+Choose an Application Type: Select Web Application
+Name: This is the name of your application
+Authorized JavaScript origins: This is the full URL to the homepage of our app. Since we are still in development mode, we are going to fill in the full URL our development server is running on. In this case, it is http://localhost:3000
+Authorized redirect URIs: Users will be redirected to this path after they have authenticated with Google: http://localhost:3000/api/auth/callback/google
+Next, a popup will display your client ID and client secret. Copy and add them o your env.local file:
+
+```
+GOOGLE_CLIENT_ID=value
+GOOGLE_CLIENT_SECRET=value
+```
+
+Restart next dev server in root directory evrytime changes are made to the .env.local file:
+yarn run dev
+
+Now open TweetBox.tsx:
+Here we can use the users info after sign in to Google, Github or Twitter. Also, we can disable the tweet button if there is no input or there is no session (logged out)
+
+```
+import { useSession } from 'next-auth/react';
+
+function TweetBox() {
+  ...
+const { data: session } = useSession();
+  // console.log(session);
+  // console.log(session?.user?.image);
+  return(
+...
+ <button
+      disabled={!input || !session}
+      className="bg-twitter rounded-full px-5 py-2 font-bold text-white disabled:opacity-40"
+      >
+              Tweet
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default TweetBox;
+
+
+```
