@@ -278,3 +278,20 @@ export interface Comment extends CommentBody {
 ```
 
 Next create a new file api/getComments.ts and utils/fetchComments.tsx
+Update Tweet.tsx and Feed.tsx
+
+Next install react-hot-toast (https://react-hot-toast.com/)
+
+```
+yarn add react-hot-toast
+```
+
+In index.tsx
+
+```
+import { Toaster } from 'react-hot-toast';
+Place <Toaster/> component after Head component
+```
+
+In Feed.tsx implement the toast:
+

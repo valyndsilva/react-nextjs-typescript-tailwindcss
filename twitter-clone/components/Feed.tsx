@@ -4,20 +4,24 @@ import { Tweet } from '../typings';
 import TweetBox from './TweetBox';
 import TweetComponent from '../components/Tweet';
 import { fetchTweets } from '../utils/fetchTweets';
-
+import toast from 'react-hot-toast';
 interface Props {
   tweets: Tweet[];
 }
 
 // rename tweets to tweetsProp
 function Feed({ tweets: tweetsProp }: Props) {
+  // Replace the tweets that came from the SSR with the current ones from Sanity with handleRefresh.
   const [tweets, setTweets] = useState<Tweet[]>(tweetsProp);
   console.log(tweets);
 
-  // Replace the tweets that came from the SSR with the current ones from Sanity
   const handleRefresh = async () => {
+    const refreshToast = toast.loading('Refreshing...');
     const tweets = await fetchTweets();
     setTweets(tweets);
+    toast.success('Feed Updated!', {
+      id: refreshToast,
+    });
   };
   return (
     <div className="col-span-7 border-x lg:col-span-5">
