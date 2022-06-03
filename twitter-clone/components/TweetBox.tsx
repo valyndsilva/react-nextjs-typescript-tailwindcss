@@ -36,7 +36,10 @@ function TweetBox() {
               <CalendarIcon className="h-5 w-5" />
               <LocationMarkerIcon className="h-5 w-5" />
             </div>
-            <button className="bg-twitter rounded-full px-5 py-2 font-bold text-white">
+            <button
+              disabled={!input}
+              className="bg-twitter rounded-full px-5 py-2 font-bold text-white disabled:opacity-40"
+            >
               Tweet
             </button>
           </div>

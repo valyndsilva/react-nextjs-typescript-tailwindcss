@@ -25,6 +25,9 @@ function Sidebar() {
       <SidebarRow Icon={CollectionIcon} title="Lists" />
       <SidebarRow Icon={UserIcon} title="SignIn" />
       <SidebarRow Icon={DotsCircleHorizontalIcon} title="More" />
+      <button className="bg-twitter rounded-full px-5 py-2 font-bold text-white ">
+        Tweet
+      </button>
     </div>
   );
 }
