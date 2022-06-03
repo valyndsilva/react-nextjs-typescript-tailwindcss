@@ -17,10 +17,6 @@ export default {
       name: 'profileImage',
       title: 'Profile image',
       type: 'string',
-      // type: 'image',
-      // options: {
-      //   hotspot: true,
-      // },
     },
     {
       name: 'tweet',
