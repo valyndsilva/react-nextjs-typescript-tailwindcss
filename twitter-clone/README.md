@@ -890,3 +890,9 @@ To add a CORS origin from your management console:
 - Under CORS Origins, click the Add CORS origin button
 - Enter your Origin, select whether or not to Allow credentials, and click Save.
 - If your origin was added successfully, it will appear at the top of your CORS origins list.
+
+ESLint Configuration Setup for NextJS:
+
+```
+yarn run next lint
+```

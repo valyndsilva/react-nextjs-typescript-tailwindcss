@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import {
   CalendarIcon,
   EmojiHappyIcon,
@@ -6,11 +6,12 @@ import {
   PhotographIcon,
   SearchCircleIcon,
   ChartBarIcon,
-} from '@heroicons/react/outline';
-import { useSession } from 'next-auth/react';
-import { Tweet, TweetBody } from '../typings';
-import toast from 'react-hot-toast';
-import { fetchTweets } from '../utils/fetchTweets';
+} from "@heroicons/react/outline";
+import { useSession } from "next-auth/react";
+import { Tweet, TweetBody } from "../typings";
+import toast from "react-hot-toast";
+import { fetchTweets } from "../utils/fetchTweets";
+import Image from "next/image";
 
 interface Props {
   setTweets: Dispatch<SetStateAction<Tweet[]>>;
@@ -21,8 +22,8 @@ function TweetBox({ setTweets }: Props) {
   // console.log(session?.user?.image);
 
   // Keep track if  the user entered something in the tweetbox:
-  const [input, setInput] = useState<string>('');
-  const [image, setImage] = useState<string>('');
+  const [input, setInput] = useState<string>("");
+  const [image, setImage] = useState<string>("");
   const [imageUrlBoxIsOpen, setImageUrlBoxIsOpen] = useState<boolean>(false);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +35,7 @@ function TweetBox({ setTweets }: Props) {
     if (!imageInputRef.current?.value) return;
     if (imageInputRef.current) {
       setImage(imageInputRef.current.value);
-      imageInputRef.current.value = ''; //clear the input
+      imageInputRef.current.value = ""; //clear the input
       setImageUrlBoxIsOpen(false);
     }
   };
@@ -42,38 +43,47 @@ function TweetBox({ setTweets }: Props) {
   const postTweet = async () => {
     const tweetInfo: TweetBody = {
       text: input,
-      username: session?.user?.name || 'Unkown user',
-      profileImage: session?.user?.image || '/avatar-icon.jpeg',
+      username: session?.user?.name || "Unkown user",
+      profileImage: session?.user?.image || "/avatar-icon.jpeg",
       image: image,
     };
-    const result = await fetch('/api/addTweet', {
+    const result = await fetch("/api/addTweet", {
       body: JSON.stringify(tweetInfo), // strigify the JS object to be sent
-      method: 'POST',
+      method: "POST",
     });
     const data = await result.json();
     const newTweets = await fetchTweets();
     setTweets(newTweets);
 
-    toast('Tweet Posted!', {
-      icon: '🚀',
+    toast("Tweet Posted!", {
+      icon: "🚀",
     });
     return data;
   };
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     postTweet();
-    setInput('');
-    setImage('');
+    setInput("");
+    setImage("");
     setImageUrlBoxIsOpen(false);
   };
 
   return (
     <div className="flex space-x-2 p-5">
-      <img
+      {/* <img
         className="mt-4 h-14 w-14 rounded-full object-cover"
         src={session?.user?.image || '/avatar-icon.jpeg'}
         alt=""
-      />
+      /> */}
+      <div className="mt-4 h-14 w-14 relative">
+        <Image
+          className="rounded-full object-cover"
+          src={session?.user?.image || "/avatar-icon.jpeg"}
+          alt=""
+          layout="fill" // required
+          objectFit="cover" // change to suit your needs
+        />
+      </div>
       <div className="flex flex-1 items-center pl-2">
         <form className="flex flex-1 flex-col">
           <input
@@ -121,11 +131,20 @@ function TweetBox({ setTweets }: Props) {
             </form>
           )}
           {image && (
-            <img
-              src={image}
-              className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
-              alt=""
-            />
+            // <img
+            //   src={image}
+            //   className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
+            //   alt=""
+            // />
+            <div className="mt-10 h-40 relative w-full">
+              <Image
+                src={image}
+                className="rounded-xl object-contain shadow-lg"
+                alt=""
+                layout="fill" // required
+                objectFit="contain" // change to suit your needs
+              />
+            </div>
           )}
         </form>
       </div>

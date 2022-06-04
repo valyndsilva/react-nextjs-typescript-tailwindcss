@@ -18,8 +18,10 @@ function Sidebar() {
 
   return (
     <div className="flex flex-col col-span-2 items-center px-4 md:items-start hover:cursor-pointer">
-      <img className="m-3 h-10 w-10" src="/logo-twitter-icon.png" alt="" />
-      {/* <Image src="/logo-twitter-icon.png" alt="" width={40} height={40} /> */}
+      {/* <img className="m-3 h-10 w-10" src="/logo-twitter-icon.png" alt="" /> */}
+      <div className="m-3">
+        <Image src="/logo-twitter-icon.png" alt="" width={40} height={40} />
+      </div>
       <SidebarRow Icon={HomeIcon} title="Home" />
       <SidebarRow Icon={HashtagIcon} title="Explore" />
       <SidebarRow Icon={BellIcon} title="Notifications" />

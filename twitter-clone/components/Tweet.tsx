@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Comment, CommentBody, Tweet } from '../typings';
-import TimeAgo from 'react-timeago';
+import React, { useEffect, useState } from "react";
+import { Comment, CommentBody, Tweet } from "../typings";
+import TimeAgo from "react-timeago";
 import {
   ChatAlt2Icon,
   SwitchHorizontalIcon,
   HeartIcon,
   UploadIcon,
-} from '@heroicons/react/outline';
-import { fetchComments } from '../utils/fetchComments';
-import { useSession } from 'next-auth/react';
-import toast from 'react-hot-toast';
+} from "@heroicons/react/outline";
+import { fetchComments } from "../utils/fetchComments";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import Image from "next/image";
 interface Props {
   tweet: Tweet;
 }
@@ -18,7 +19,7 @@ function Tweet({ tweet }: Props) {
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState<string>("");
 
   const refreshComments = async () => {
     const comments: Comment[] = await fetchComments(tweet._id);
@@ -31,26 +32,26 @@ function Tweet({ tweet }: Props) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const commentToast = toast.loading('Posting Comment...');
+    const commentToast = toast.loading("Posting Comment...");
 
     // Make a REST API call to backend - Comment Logic
     const commentInfo: CommentBody = {
       comment: input,
       tweetId: tweet._id,
-      username: session?.user?.name || 'Unknown User',
-      profileImage: session?.user?.image || '/avatar-icon.jpeg',
+      username: session?.user?.name || "Unknown User",
+      profileImage: session?.user?.image || "/avatar-icon.jpeg",
     };
-    const result = await fetch('/api/addComment', {
+    const result = await fetch("/api/addComment", {
       body: JSON.stringify(commentInfo), // strigify the JS object to be sent
-      method: 'POST',
+      method: "POST",
     });
     const data = await result.json();
     console.log(result);
-    toast.success('Comment Posted!', {
+    toast.success("Comment Posted!", {
       id: commentToast,
     });
 
-    setInput('');
+    setInput("");
     setCommentBoxVisible(false);
     refreshComments();
   };
@@ -62,16 +63,25 @@ function Tweet({ tweet }: Props) {
       className="flex flex-col space-x-3 border-y p-5 border-gray-100"
     >
       <div className="flex space-x-3">
-        <img
+        {/* <img
           className="w-10 h-10 rounded-full object-cover"
-          src={tweet.profileImage || '/avatar-icon.jpeg'}
+          src={tweet.profileImage || "/avatar-icon.jpeg"}
           alt="profile"
-        />
+        /> */}
+        <div className="w-10 h-10 relative">
+          <Image
+            className=" rounded-full object-cover"
+            src={tweet.profileImage || "/avatar-icon.jpeg"}
+            alt=""
+            layout="fill" // required
+            objectFit="cover" // change to suit your needs
+          />
+        </div>
         <div>
           <div className="flex items-center space-x-1">
             <p className="mr-1 font-bold">{tweet.username}</p>
             <p className="hidden text-sm text-gray-500 sm:inline">
-              @{tweet.username.replace(/\s+/g, '').toLowerCase()} ·
+              @{tweet.username.replace(/\s+/g, "").toLowerCase()} ·
             </p>
             <TimeAgo
               className="text-sm text-gray-500"
@@ -80,11 +90,20 @@ function Tweet({ tweet }: Props) {
           </div>
           <p className="pt-1">{tweet.text}</p>
           {tweet.image && (
-            <img
-              src={tweet.image}
-              alt="image"
-              className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
-            />
+            // <img
+            //   src={tweet.image}
+            //   alt="image"
+            //   className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
+            // />
+            <div className="m-5 ml-0 mb-1 max-h-60 h-64 w-96 relative">
+              <Image
+                className=" rounded-lg object-cover shadow-sm"
+                src={tweet.image}
+                alt=""
+                layout="fill" // required
+                objectFit="cover" // change to suit your needs
+              />
+            </div>
           )}
         </div>
       </div>
@@ -132,16 +151,26 @@ function Tweet({ tweet }: Props) {
           {comments.map((comment) => (
             <div key={comment._id} className="relative flex space-x-2">
               <hr className="absolute left-5 top-10 h-8 border-x border-twitter/30" />
-              <img
+
+              {/* <img
                 src={comment.profileImage}
                 alt=""
                 className="h-7 w-7 rounded-full object-cover"
-              />
+              /> */}
+              <div className="h-7 w-7 relative rounded-full object-cover">
+                <Image
+                  className="rounded-full object-cover"
+                  src={comment.profileImage}
+                  alt=""
+                  layout="fill" // required
+                  objectFit="cover" // change to suit your needs
+                />
+              </div>
               <div>
                 <div className="flex items-center space-x-1">
                   <p className="mr-1 font-bold">{comment.username}</p>
                   <p className="hidden text-sm text-gray-500 lg:inline">
-                    @{comment.username.replace(/\s+/g, '').toLowerCase()} ·
+                    @{comment.username.replace(/\s+/g, "").toLowerCase()} ·
                   </p>
                 </div>
                 <TimeAgo
