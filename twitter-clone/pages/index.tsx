@@ -7,7 +7,6 @@ import Widgets from "../components/Widgets";
 import { Tweet } from "../typings";
 import { fetchTweets } from "../utils/fetchTweets";
 import { Toaster } from "react-hot-toast";
-import { useSession } from "next-auth/react";
 // import { GetStaticProps } from "next";
 interface Props {
   tweets: Tweet[];

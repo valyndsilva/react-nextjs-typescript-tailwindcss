@@ -68,7 +68,7 @@ function Tweet({ tweet }: Props) {
           src={tweet.profileImage || "/avatar-icon.jpeg"}
           alt="profile"
         /> */}
-        <div className="w-10 h-10 relative">
+        <div className="p-5 h-10  w-10 relative">
           <Image
             className=" rounded-full object-cover"
             src={tweet.profileImage || "/avatar-icon.jpeg"}
@@ -97,7 +97,7 @@ function Tweet({ tweet }: Props) {
             // />
             <div className="m-5 ml-0 mb-1 max-h-60 h-64 w-96 relative">
               <Image
-                className=" rounded-lg object-cover shadow-sm"
+                className="rounded-lg object-cover shadow-sm"
                 src={tweet.image}
                 alt=""
                 layout="fill" // required
@@ -157,7 +157,7 @@ function Tweet({ tweet }: Props) {
                 alt=""
                 className="h-7 w-7 rounded-full object-cover"
               /> */}
-              <div className="h-7 w-7 relative rounded-full object-cover">
+              <div className="p-4 h-7 w-7 relative ">
                 <Image
                   className="rounded-full object-cover"
                   src={comment.profileImage}
@@ -172,13 +172,14 @@ function Tweet({ tweet }: Props) {
                   <p className="hidden text-sm text-gray-500 lg:inline">
                     @{comment.username.replace(/\s+/g, "").toLowerCase()} ·
                   </p>
+
+                  <TimeAgo
+                    className="text-sm text-gray-500"
+                    date={comment._createdAt}
+                  />
                 </div>
-                <TimeAgo
-                  className="text-sm text-gray-500"
-                  date={comment._createdAt}
-                />
+                <p>{comment.comment}</p>
               </div>
-              <p>{comment.comment}</p>
             </div>
           ))}
         </div>
