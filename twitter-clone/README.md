@@ -759,3 +759,132 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
 export default Tweet;
 ```
+
+## Cross check that all variabled are included in.env.local
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_BASE_URL=
+NEXTAUTH_URL=
+NEXTAUTH_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+TWITTER_CLIENT_ID=
+TWITTER_CLIENT_SECRET=
+
+### Deploy the sanity studio online so it can be accessed from anywhere:
+
+```
+cd sanity-medium-clone
+sanity deploy
+```
+
+Give a studio hostname: sanity-studio-medium-clone
+It's deployed to: https://sanity-studio-medium-clone.sanity.studio/
+
+### Deploy the NextJS app to github and trigger vercel deploy hooks:
+
+Open .gitignore and add:
+
+```
+sanity-medium-clone/node_modules
+sanity-medium-clone/dist
+sanity-medium-clone/coverage
+sanity-medium-clone/logs
+sanity-medium-clone/\*.log
+```
+
+Next push updates to github:
+
+```
+git add .
+git commit -m "comment"
+git push -u origin main
+```
+
+Next, trigger vercel deploy hooks from your sanity studio folder: sanity-medium-clone
+
+```
+sanity install vercel-deploy
+sanity install @sanity/dashboard
+```
+
+### Deploying Sanity Studio with Vercel:
+
+Next, go to https://vercel.com/guides/deploying-sanity-studio-with-vercel
+
+#### Step 1: Setting Up your Sanity Studio Project
+
+Note: You can skip this step if you already have a project set up.
+
+```
+yarn add @sanity/cli
+sanity init (To initiate a new project and download the Studio code to your computer)
+sanity start (To start a local development server, cd into the project folder)
+```
+
+#### Step 2: Preparing for Deployment
+
+To provide Vercel with routing information for the app, add a "vercel.json" file with the following content in the root directory medium-clone:
+
+```
+{
+"version": 2,
+"rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+Add the following scripts to the Studio’s package.json file i.e sanity-medium-clone folder:
+
+```
+{
+...
+"scripts": {
+"start": "sanity start",
+"test": "sanity check",
+"build": "sanity build public -y"
+}
+}
+```
+
+Lastly, add @sanity/cli as a development dependency, this will allow Vercel to build your project on deployment.
+After saving your package.json file you will be ready to deploy your project.
+
+```
+npm i --save-dev @sanity/cli
+```
+
+#### Step 3: Deploy With Vercel
+
+- Open, vercel.com/dashboard, New Project -> Import Git Repository
+- Select the repo root directory: medium-clone
+- Select framework: Next.js
+- Add the Environment Variables frrom .env.local
+- Deploy
+
+#### Step 4: Adding CORS credentials to your Sanity project.
+
+##### Via the command line interface:
+
+Once Sanity Studio is deployed, you will need to add it's URL to Sanity’s CORS origins settings. You can do this from the command line:
+
+```
+sanity cors add https://your-url.vercel.app --credentials
+```
+
+You can confirm your origin was added with the statement CORS origin added successfully or by consulting the list returned by the command sanity cors list.
+
+OR
+
+##### Via your management console:
+
+To add a CORS origin from your management console:
+
+- Go to https://www.sanity.io/manage
+- Pick your project from the list
+- Go to Settings, and then to API settings
+- Under CORS Origins, click the Add CORS origin button
+- Enter your Origin, select whether or not to Allow credentials, and click Save.
+- If your origin was added successfully, it will appear at the top of your CORS origins list.

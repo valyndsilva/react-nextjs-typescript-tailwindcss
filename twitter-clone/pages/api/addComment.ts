@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { CommentBody } from '../../typings';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { CommentBody } from "../../typings";
 type Data = {
   message: string;
 };
@@ -18,12 +18,12 @@ export default async function handler(
     mutations: [
       {
         create: {
-          _type: 'comment',
+          _type: "comment",
           comment: data.comment,
           username: data.username,
           profileImage: data.profileImage,
           tweet: {
-            _type: 'reference',
+            _type: "reference",
             _ref: data.tweetId,
           },
         },
@@ -33,12 +33,12 @@ export default async function handler(
   const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
   const result = await fetch(apiEndpoint, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`,
     },
     body: JSON.stringify(mutations),
-    method: 'POST',
+    method: "POST",
   });
   const json = await result.json();
-  res.status(200).json({ message: 'Comment Added' });
+  res.status(200).json({ message: "Comment Added" });
 }
