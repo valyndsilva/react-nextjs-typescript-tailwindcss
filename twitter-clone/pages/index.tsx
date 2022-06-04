@@ -43,18 +43,6 @@ const Home = ({ tweets }: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // THIS CAUSES THE ERROR
-  const { data: session } = useSession();
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
-      },
-    };
-  }
-  console.log("SESSION", session);
 
   //This is where the server pre-builds/pre-fetches the pages
   // Here all the information that is needed to pre-fetch is passed as the props to the component
