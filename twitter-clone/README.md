@@ -858,6 +858,8 @@ npm i --save-dev @sanity/cli
 
 #### Step 3: Deploy With Vercel
 
+When using the Vercel CLI to deploy make sure you add a .vercelignore that includes files that should not be uploaded, generally these are the same files included in .gitignore.
+
 - Open, vercel.com/dashboard, New Project -> Import Git Repository
 - Select the repo root directory: studio
 - Select framework: Next.js
