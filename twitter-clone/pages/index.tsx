@@ -7,6 +7,7 @@ import Widgets from "../components/Widgets";
 import { Tweet } from "../typings";
 import { fetchTweets } from "../utils/fetchTweets";
 import { Toaster } from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 interface Props {
   tweets: Tweet[];
@@ -42,6 +43,19 @@ const Home = ({ tweets }: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // THIS CAUSES THE ERROR
+  const { data: session } = useSession();
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/api/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+  console.log("SESSION", session);
+
   //This is where the server pre-builds/pre-fetches the pages
   // Here all the information that is needed to pre-fetch is passed as the props to the component
   // It changes the homepage route to SSR route
