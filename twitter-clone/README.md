@@ -896,3 +896,9 @@ ESLint Configuration Setup for NextJS:
 ```
 yarn run next lint
 ```
+
+To remove incorrect peer dependency errors:
+
+```
+yarn upgrade
+```
