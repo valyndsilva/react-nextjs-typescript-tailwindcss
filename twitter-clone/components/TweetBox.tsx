@@ -27,7 +27,7 @@ function TweetBox({ setTweets }: Props) {
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addImageToTweet = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
     // if no image assigned  don't attach an image

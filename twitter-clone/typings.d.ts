@@ -20,11 +20,10 @@ export interface Tweet extends TweetBody {
 }
 
 export type CommentBody = {
-  text: string;
+  comment: string;
   username: string;
   profileImage: string;
-  image?: string;
-  comment: string;
+  tweetId: string;
 };
 
 export interface Comment extends CommentBody {

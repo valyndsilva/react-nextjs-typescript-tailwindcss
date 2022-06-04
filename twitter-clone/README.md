@@ -463,7 +463,7 @@ export default TweetBox;
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const addImageToTweet = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement,  globalThis.MouseEvent>
   ) => {
     e.preventDefault();
     // if no image assigned  don't attach an image
@@ -622,3 +622,140 @@ export default TweetBox;
 Test the TweetBox. It should work :)
 
 Bascially when you click on Tweet it sends the POST request information in a req.body which mutates the Sanity platform backend and adds in the new document i.e the new Tweet. Next, we refetch the documents and see a re-render
+
+To hide the scrollbar in Feed:
+(https://www.npmjs.com/package/tailwind-scrollbar-hide)
+
+```
+yarn add tailwind-scrollbar-hide
+```
+
+Next,open tailwind.config.js:
+plugins: [require('tailwind-scrollbar-hide')],
+
+Add className="scrollbar-hide" to implement it.
+
+## Implement Add Comment Functionality:
+
+Create addComment.ts in api folder:
+
+```
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { CommentBody } from '../../typings';
+type Data = {
+  message: string;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  const data: CommentBody = JSON.parse(req.body);
+  console.log(data.tweetId);
+
+  // mutations sends instruction to the backend and tells the backend how to update the data
+  // https://www.sanity.io/docs/http-mutations
+  const mutations = {
+    mutations: [
+      {
+        create: {
+          _type: 'comment',
+          comment: data.comment,
+          username: data.username,
+          profileImage: data.profileImage,
+          tweet: {
+            _type: 'reference',
+            _ref: data.tweetId,
+          },
+        },
+      },
+    ],
+  };
+  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
+  const result = await fetch(apiEndpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`,
+    },
+    body: JSON.stringify(mutations),
+    method: 'POST',
+  });
+  const json = await result.json();
+  res.status(200).json({ message: 'Comment Added' });
+}
+
+```
+
+Open Tweet.tsx:
+
+```
+import { useSession } from 'next-auth/react';
+
+const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
+  const [input, setInput] = useState<string>('');
+  ....
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const commentToast = toast.loading('Posting Comment...');
+
+    // Make a REST API call to backend - Comment Logic
+    const commentInfo: CommentBody = {
+      comment: input,
+      tweetId: tweet._id,
+      username: session?.user?.name || 'Unknown User',
+      profileImage: session?.user?.image || '/avatar-icon.jpeg',
+    };
+    const result = await fetch('/api/addComment', {
+      body: JSON.stringify(commentInfo), // strigify the JS object to be sent
+      method: 'POST',
+    });
+    const data = await result.json();
+    console.log(result);
+    toast.success('Comment Posted!', {
+      id: commentToast,
+    });
+
+    setInput('');
+    setCommentBoxVisible(false);
+    refreshComments();
+  };
+
+  return(
+    ...
+      <div
+          onClick={() => session && setCommentBoxVisible(!commentBoxVisible)}
+          className="flex cursor-pointer items-center space-x-3 text-gray-400"
+        >
+          <ChatAlt2Icon className="h-5 w-5" />
+          <p>{comments.length}</p>
+        </div>
+
+        ...
+     {/* Comment Box Logic */}
+      {commentBoxVisible && (
+        <form onSubmit={handleSubmit} className="mt-3 flex space-x-3">
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            className="flex-1 rounded-lg bg-gray-100 p-2 outline-none"
+            placeholder="Write a comment..."
+          />
+          <button
+          type="submit"
+            className="text-twitter disabled:text-gray-200"
+            disabled={!input}
+           // onClick={handleSubmit}
+          >
+            Post
+          </button>
+        </form>
+      )}
+      .....
+  );
+}
+
+export default Tweet;
+```
