@@ -1,5 +1,5 @@
-import React from 'react';
-import { SearchIcon } from '@heroicons/react/outline';
+import React from "react";
+import { SearchIcon } from "@heroicons/react/outline";
 import {
   TwitterTimelineEmbed,
   TwitterShareButton,
@@ -11,7 +11,7 @@ import {
   TwitterDMButton,
   TwitterVideoEmbed,
   TwitterOnAirButton,
-} from 'react-twitter-embed';
+} from "react-twitter-embed";
 
 function Widgets() {
   return (
@@ -28,6 +28,7 @@ function Widgets() {
       <TwitterTimelineEmbed
         sourceType="profile"
         screenName="saurabhnemade"
+        // screenName="ValynDsilva"
         options={{ height: 1000 }}
       />
     </div>
