@@ -777,23 +777,23 @@ TWITTER_CLIENT_SECRET=
 ### Deploy the sanity studio online so it can be accessed from anywhere:
 
 ```
-cd sanity-medium-clone
+cd sanity-studio
 sanity deploy
 ```
 
-Give a studio hostname: sanity-studio-medium-clone
-It's deployed to: https://sanity-studio-medium-clone.sanity.studio/
+Give a studio hostname: sanity-studio-twitter-clone
+It's deployed to: https://sanity-studio-twitter-clone.sanity.studio/
 
 ### Deploy the NextJS app to github and trigger vercel deploy hooks:
 
 Open .gitignore and add:
 
 ```
-sanity-medium-clone/node_modules
-sanity-medium-clone/dist
-sanity-medium-clone/coverage
-sanity-medium-clone/logs
-sanity-medium-clone/\*.log
+sanity-studio/node_modules
+sanity-studio/dist
+sanity-studio/coverage
+sanity-studio/logs
+sanity-studio/\*.log
 ```
 
 Next push updates to github:
@@ -804,7 +804,7 @@ git commit -m "comment"
 git push -u origin main
 ```
 
-Next, trigger vercel deploy hooks from your sanity studio folder: sanity-medium-clone
+Next, trigger vercel deploy hooks from your sanity studio folder: sanity-studio
 
 ```
 sanity install vercel-deploy
@@ -827,7 +827,7 @@ sanity start (To start a local development server, cd into the project folder)
 
 #### Step 2: Preparing for Deployment
 
-To provide Vercel with routing information for the app, add a "vercel.json" file with the following content in the root directory medium-clone:
+To provide Vercel with routing information for the app, add a "vercel.json" file with the following content in the root directory studio:
 
 ```
 {
@@ -836,7 +836,7 @@ To provide Vercel with routing information for the app, add a "vercel.json" file
 }
 ```
 
-Add the following scripts to the Studio’s package.json file i.e sanity-medium-clone folder:
+Add the following scripts to the Studio’s package.json file i.e sanity-studio folder:
 
 ```
 {
@@ -859,7 +859,7 @@ npm i --save-dev @sanity/cli
 #### Step 3: Deploy With Vercel
 
 - Open, vercel.com/dashboard, New Project -> Import Git Repository
-- Select the repo root directory: medium-clone
+- Select the repo root directory: studio
 - Select framework: Next.js
 - Add the Environment Variables frrom .env.local
 - Deploy
