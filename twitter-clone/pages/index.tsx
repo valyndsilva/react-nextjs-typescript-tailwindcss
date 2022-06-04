@@ -8,7 +8,7 @@ import { Tweet } from "../typings";
 import { fetchTweets } from "../utils/fetchTweets";
 import { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
-
+import { GetStaticProps } from "next";
 interface Props {
   tweets: Tweet[];
 }
@@ -42,15 +42,26 @@ const Home = ({ tweets }: Props) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-
-  //This is where the server pre-builds/pre-fetches the pages
-  // Here all the information that is needed to pre-fetch is passed as the props to the component
-  // It changes the homepage route to SSR route
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   //This is where the server pre-builds/pre-fetches the pages
+//   // Here all the information that is needed to pre-fetch is passed as the props to the component
+//   // It changes the homepage route to SSR route
+//   const tweets = await fetchTweets();
+//   return {
+//     props: {
+//       tweets,
+//     },
+//   };
+// };
+// (Static Site Generation):When NextJS tries to pre-build/ pre-fetch the page we need to tell how to use the post slug or id to fetch the info.
+// Go to each page and getStaticProps:
+export const getStaticProps: GetStaticProps = async () => {
   const tweets = await fetchTweets();
   return {
     props: {
       tweets,
     },
+    revalidate: 60, // this enables ISR and updates the old cache version after 60 seconds
+    // It basically server side renders the page after 60 seconds and caches it and that one gets served for the next 60 secs in a static way
   };
 };
