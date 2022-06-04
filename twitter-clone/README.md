@@ -352,7 +352,7 @@ function Sidebar() {
 Open .env.local and add NEXT_AUTH_SECRET and NEXTAUTH_URL (very important step):
 
 ```
-NEXTAUTH_SECRET=value you can define
+NEXTAUTH_SECRET=value you can define (go to https://generate-secret.now.sh/32)
 NEXTAUTH_URL=value same as NEXT_PUBLIC_BASE_URL (this should be changed to the url after deployment)
 ```
 
