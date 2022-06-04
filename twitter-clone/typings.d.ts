@@ -8,6 +8,7 @@ export type TweetBody = {
   username: string;
   profileImage: string;
   image?: string;
+  error?: string;
 };
 
 export interface Tweet extends TweetBody {
@@ -34,6 +35,6 @@ export interface Comment extends CommentBody {
   _type: string;
   tweet: {
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
   };
 }
