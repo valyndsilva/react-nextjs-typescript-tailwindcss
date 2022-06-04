@@ -1,7 +1,9 @@
-# Meduim Clone 
+# Meduim Clone
+
 [Preview](https://react-nextjs-typescript-tailwindcss-medium-clone.vercel.app/)
 
 ## Tech Stack Used:
+
 - React
 - TypeScript
 - NextJS
@@ -10,6 +12,7 @@
 - GROQ
 
 ## Scripts used:
+
 ```
 npx create-next-app --example with-tailwindcss medium-clone
 npm install -g @sanity/cli
@@ -18,17 +21,21 @@ npm run dev
 ```
 
 ## Implementation
+
 ### To run the sanity studio locally, run the following command:
+
 ```
 cd sanity-medium-clone
 sanity-login
 sanity start (This runs the local sanity studio)
 ```
+
 - Go to http://localhost:3333
 - Select Desk tab and you can see the different schemas available
 - Create a few posts in the Desk tab
 
 ### To add a custom field open sanity-medium-clone/schemas/post.js and add:
+
 ```
 {
 name: 'description',
@@ -41,7 +48,8 @@ You can see the updated fields.
 
 ### Open Vision tab. Here you can use GROQ to query the schema.
 
-Ex: 
+Ex:
+
 ```
 *[_type == "post"]{
 _id,
@@ -59,6 +67,7 @@ mainImage
 Click on Fetch button to see the result.
 
 Open the Terminal:
+
 ```
 cd medium-clone
 npm install next-sanity
@@ -66,6 +75,7 @@ npm install @sanity/image-url
 ```
 
 Next, install ESLint using npm:
+
 ```
 npm install eslint --save-dev
 ```
@@ -77,9 +87,11 @@ npm init @eslint/config
 ```
 
 ### Create a new file in the root folder called .env.local
+
 Open sanity.json and copy the dataset and projectId values into the .env.local
 
 Ex:
+
 ```
 NEXT_PUBLIC_SANITY_DATASET=dataset-value
 NEXT_PUBLIC_SANITY_PROJECT_ID=projectId-value
@@ -87,9 +99,11 @@ SANITY_API_TOKEN=value
 ```
 
 ### Next, create a new folder in the root folder called "lib" and 2 files in it:
+
 sanity.js and config.js
 
 Open config.js:
+
 ```
 - export const config = {
 /**
@@ -112,6 +126,7 @@ Open config.js:
 ```
 
 Next, Open sanity.js:
+
 ```
 import { createCurrentUserHook, createClient } from 'next-sanity'
 import createImageUrlBuilder from '@sanity/image-url'
@@ -135,6 +150,7 @@ On the Homepage (index.tsx) page we implement Server Side Rendering: So anytime 
 Basically it means the page is built on the server (next.js) per request and delivers the page to the client side ready.
 
 ### Implementing SSR (index.tsx)
+
 ```
 export const getServerSideProps = async () => {
 //This is where the server pre-builds the pages
@@ -151,6 +167,7 @@ posts,
 ```
 
 ### Create a new file for type definitions called "typings.d.ts" in the root folder:
+
 ```
 export interface Post {
 // Refer to sanity query result to get the properties of the post
@@ -171,13 +188,15 @@ body: [object]
 ```
 
 In index.tsx add the following:
+
 ```
 interface Props {
-posts: [Post] // importing Post from typings.d.ts  
+posts: [Post] // importing Post from typings.d.ts
 }
 ```
 
 ### ISR Incremental Static Regeneration:
+
 - It helps to pre-build the dynamic pages detemined by the slug.
 - Static pages are cached which is combined with refreshing the page every 60 seconds so the cache is never stale for the period you define.
 - Let's create a page that lives on /post/slug
@@ -186,23 +205,29 @@ posts: [Post] // importing Post from typings.d.ts
 - getStaticProps should have revalidate to make sure to autorefresh after the time specified.
 
 ### Next, in medium-clone folder install React-Portable-Text:
+
 ```
 npm install react-portable-text
 npm install react-hook-form (https://react-hook-form.com/)
 ```
 
 ### Create a new file createComment.ts in api folder.
-In medium-clone folder: 
+
+In medium-clone folder:
+
 ```
 npm install @sanity/client
 ```
 
 To get the SANITY_API_TOKEN:
+
 - Open sanity.io dashboard -> API -> Tokens -> Add API Token -> Give a name and select Editor option -> Save.
 - Open .env.local and add the SANITY_API_TOKEN to the file.
 
 ### To check your comments that are submitted in the sanity studio and add the comment schema.
+
 - Go to sanity-medium-clone -> schemas -> create comment.js:
+
 ```
 export default {
 name: 'comment',
@@ -241,11 +266,13 @@ type: 'post',
 ```
 
 #### In schema.js:
+
 ```
 import comment from './comment' and add comment in schemaTypes.concat
 ```
 
 ### Add the interface definitions for comment in typings.d.ts:
+
 ```
 export interface Comment {
 approved: boolean;
@@ -264,7 +291,14 @@ _updatedAt: string;
 }
 ```
 
+## Cross check that all variabled are included in.env.local
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+SANITY_API_TOKEN=
+
 ### Deploy the sanity studio online so it can be accessed from anywhere:
+
 ```
 cd sanity-medium-clone
 sanity deploy
@@ -274,7 +308,9 @@ Give a studio hostname: sanity-studio-medium-clone
 It's deployed to: https://sanity-studio-medium-clone.sanity.studio/
 
 ### Deploy the NextJS app to github and trigger vercel deploy hooks:
+
 Open .gitignore and add:
+
 ```
 sanity-medium-clone/node_modules
 sanity-medium-clone/dist
@@ -282,23 +318,30 @@ sanity-medium-clone/coverage
 sanity-medium-clone/logs
 sanity-medium-clone/\*.log
 ```
+
 Next push updates to github:
+
 ```
 git add .
 git commit -m "comment"
 git push -u origin main
 ```
+
 Next, trigger vercel deploy hooks from your sanity studio folder: sanity-medium-clone
+
 ```
 sanity install vercel-deploy
 sanity install @sanity/dashboard
 ```
 
 ### Deploying Sanity Studio with Vercel:
+
 Next, go to https://vercel.com/guides/deploying-sanity-studio-with-vercel
 
 #### Step 1: Setting Up your Sanity Studio Project
+
 Note: You can skip this step if you already have a project set up.
+
 ```
 npm i -g @sanity/cli
 sanity init (To initiate a new project and download the Studio code to your computer)
@@ -306,7 +349,9 @@ sanity start (To start a local development server, cd into the project folder)
 ```
 
 #### Step 2: Preparing for Deployment
+
 To provide Vercel with routing information for the app, add a "vercel.json" file with the following content in the root directory medium-clone:
+
 ```
 {
 "version": 2,
@@ -315,6 +360,7 @@ To provide Vercel with routing information for the app, add a "vercel.json" file
 ```
 
 Add the following scripts to the Studio’s package.json file i.e sanity-medium-clone folder:
+
 ```
 {
 ...
@@ -328,10 +374,13 @@ Add the following scripts to the Studio’s package.json file i.e sanity-medium-
 
 Lastly, add @sanity/cli as a development dependency, this will allow Vercel to build your project on deployment.
 After saving your package.json file you will be ready to deploy your project.
+
 ```
 npm i --save-dev @sanity/cli
 ```
+
 #### Step 3: Deploy With Vercel
+
 - Open, vercel.com/dashboard, New Project -> Import Git Repository
 - Select the repo root directory: medium-clone
 - Select framework: Next.js
@@ -341,6 +390,7 @@ npm i --save-dev @sanity/cli
 #### Step 4: Adding CORS credentials to your Sanity project.
 
 ##### Via the command line interface:
+
 Once Sanity Studio is deployed, you will need to add it's URL to Sanity’s CORS origins settings. You can do this from the command line:
 
 ```
@@ -352,10 +402,12 @@ You can confirm your origin was added with the statement CORS origin added succe
 OR
 
 ##### Via your management console:
+
 To add a CORS origin from your management console:
+
 - Go to https://www.sanity.io/manage
 - Pick your project from the list
 - Go to Settings, and then to API settings
 - Under CORS Origins, click the Add CORS origin button
-- Enter your Origin, select whether or not to Allow credentials, and click Save. 
+- Enter your Origin, select whether or not to Allow credentials, and click Save.
 - If your origin was added successfully, it will appear at the top of your CORS origins list.
