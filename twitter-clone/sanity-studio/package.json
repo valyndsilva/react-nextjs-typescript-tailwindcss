@@ -8,7 +8,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "sanity start",
-    "build": "sanity build"
+    "test": "sanity check",
+    "build": "sanity build public -y"
   },
   "keywords": [
     "sanity"
@@ -17,6 +18,7 @@
     "@portabletext/react": "^1.0.6",
     "@sanity/base": "^2.30.1",
     "@sanity/core": "^2.30.1",
+    "@sanity/dashboard": "^2.30.1",
     "@sanity/default-layout": "^2.30.1",
     "@sanity/default-login": "^2.30.1",
     "@sanity/desk-tool": "^2.30.1",
@@ -27,6 +29,7 @@
     "prop-types": "^15.7",
     "react": "^17.0",
     "react-dom": "^17.0",
+    "sanity-plugin-vercel-deploy": "^2.1.6",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {}
