@@ -248,6 +248,11 @@
     split2 "^3.2.2"
     throttle-debounce "^3.0.1"
 
+"@sanity/image-url@^0.140.22":
+  version "0.140.22"
+  resolved "https://registry.yarnpkg.com/@sanity/image-url/-/image-url-0.140.22.tgz#7a65f56bb751f7b1c5dfacfadd34ee10fc4f0fde"
+  integrity sha512-CAmQZnj+KM7FSEYiWlIGDit072syicYuAw0w7R2ctMzHiZ4p9mE/g6dBnYqrqFUrw2J+GpJgPt+RVspKP8vdqA==
+
 "@sanity/timed-out@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@sanity/timed-out/-/timed-out-4.0.2.tgz#c9f61f9a1609baa1eb3e4235a24ea2a775022cdf"
@@ -2156,6 +2161,13 @@ next-auth@^4.3.4:
     preact "^10.6.3"
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
+
+next-sanity-image@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/next-sanity-image/-/next-sanity-image-3.2.1.tgz#81b44969c7b5c281b7f29fe25b3649828fc5a5ea"
+  integrity sha512-lnynR/h7kD5ueVxQoam8ElKXb+bGWuU1cP+PCwx1NzIiBUHM2wBMnvmpt+emubGocMaIURT/iwPU46VnmB9rsQ==
+  dependencies:
+    "@sanity/image-url" "^0.140.22"
 
 next-sanity@^0.5.2:
   version "0.5.2"
