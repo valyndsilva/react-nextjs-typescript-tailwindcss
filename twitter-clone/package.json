@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "@netlify/plugin-nextjs": "^4.7.1",
     "@sanity/cli": "^2.30.0",
     "csstype": "^3.1.0",
     "export": "^0.1.337",
