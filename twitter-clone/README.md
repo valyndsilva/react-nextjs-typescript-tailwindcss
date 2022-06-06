@@ -903,6 +903,27 @@ To remove incorrect peer dependency errors:
 yarn upgrade
 ```
 
-yarn add next-on-netlify
-https://www.netlify.com/blog/2020/06/10/2-ways-to-create-server-rendered-routes-using-next.js-and-netlify/
+## Deploying Next.JS App on Netlify:
+
+Steps: https://www.netlify.com/blog/2021/05/04/migrating-an-existing-next.js-project-to-netlify/
+To enable server-side rendering and other framework-specific features in your builds install Essential Next Plugin by netlify or manually install it with the command below: (https://github.com/netlify/netlify-plugin-nextjs)
+
+```
 yarn add @netlify/plugin-nextjs
+```
+
+Next, Create a netlify.toml file and include the script below:
+
+```
+[build]
+command = "npm run build"
+publish = ".next"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+```
+
+Deploy Settings:
+Build command: yarn run build
+
+Deploy. :slightly_smiling_face:
