@@ -4,10 +4,11 @@ module.exports = {
   // target: "serverless",
   images: {
     domains: [
-      "localhost",
-      "lh3.googleusercontent.com",
-      "github.com",
-      "raw.githubusercontent.com",
+      "*",
+      // "localhost",
+      // "lh3.googleusercontent.com",
+      // "github.com",
+      // "raw.githubusercontent.com",
     ],
   },
 };
