@@ -97,7 +97,7 @@ function Tweet({ tweet }: Props) {
             className=" rounded-full object-cover"
             loader={() => src}
             src={src}
-            // unoptimized
+            unoptimized
             alt=""
             layout="fill" // required
             objectFit="cover" // change to suit your needs

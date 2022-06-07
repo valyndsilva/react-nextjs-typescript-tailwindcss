@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const data: CommentBody = JSON.parse(req.body);
-  console.log(data.tweetId);
+  // console.log(data.tweetId);
 
   // mutations sends instruction to the backend and tells the backend how to update the data
   // https://www.sanity.io/docs/http-mutations
