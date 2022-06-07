@@ -23,6 +23,7 @@ sanity-medium-clone/*.log
 /build
 
 # misc
+../.DS_Store
 .DS_Store
 *.pem
 
