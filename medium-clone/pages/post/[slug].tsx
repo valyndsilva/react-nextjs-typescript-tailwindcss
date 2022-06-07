@@ -5,6 +5,16 @@ import { sanityClient, urlFor } from '../../lib/sanity';
 import { Post } from '../../typings';
 import PortableText from 'react-portable-text';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import TimeAgo from 'react-timeago';
+import { useReadingTime } from 'react-reading-time-estimator';
+import {
+  Twitter,
+  FacebookRounded,
+  LinkedIn,
+  BookmarkAddOutlined,
+  ModeCommentOutlined,
+} from '@mui/icons-material';
+import Link from 'next/link';
 interface Props {
   post: Post;
 }
@@ -18,6 +28,11 @@ interface FormInput {
 }
 
 function Post({ post }: Props) {
+  const {
+    text, // 1 min read
+    minutes, // 1
+  } = useReadingTime(post.description);
+
   const [submitted, setSubmitted] = useState(false);
   console.log(post);
   // React Hook Form
@@ -53,21 +68,50 @@ function Post({ post }: Props) {
         alt=""
       />
       <article className="max-w-3xl mx-auto p-5">
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-5">
+            <img
+              className="h-14 w-14 rounded-full"
+              src={urlFor(post.author.image).url()!}
+              alt="author avatar image"
+            />
+            <div>
+              <span className="font-light text-md">{post.author.name}</span>
+              <p className="font-extralight text-sm">
+                <TimeAgo
+                  className="text-sm text-gray-500"
+                  date={post._createdAt}
+                />
+                &nbsp; · &nbsp;{Math.ceil(minutes)} min read
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-between items-center pt-10 pb-5 space-x-8">
+            <div className="flex items-center space-x-2">
+              <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+                <Twitter sx={{ fontSize: 24 }} />
+              </div>
+              <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+                <FacebookRounded sx={{ fontSize: 24 }} />
+              </div>
+              <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+                <LinkedIn sx={{ fontSize: 24 }} />
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+                <BookmarkAddOutlined sx={{ fontSize: 24 }} />
+              </div>
+              <div className="-rotate-90 text-gray-400 cursor-pointer">
+                <ModeCommentOutlined sx={{ fontSize: 24 }} />
+              </div>
+            </div>
+          </div>
+        </div>
         <h1 className="text-3xl mt-10 mb-3">{post.title}</h1>
         <h2 className="text-xl font-light text-gray-500 mb-2">
           {post.description}
         </h2>
-        <div className="flex  items-center space-x-2">
-          <img
-            className="h-10 w-10 rounded-full"
-            src={urlFor(post.author.image).url()!}
-          />
-          <p className="font-extralight text-sm">
-            Blog post by{' '}
-            <span className="text-green-600">{post.author.name}</span> -
-            Published at {new Date(post._createdAt).toLocaleString()}
-          </p>
-        </div>
 
         <div>
           {/* <PortableText
@@ -97,8 +141,50 @@ function Post({ post }: Props) {
             }}
           />
         </div>
+
+        <div className="flex justify-between items-center pt-10 pb-5 space-x-8">
+          <div className="flex items-center space-x-2">
+            <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+              <Twitter sx={{ fontSize: 24 }} />
+            </div>
+            <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+              <FacebookRounded sx={{ fontSize: 24 }} />
+            </div>
+            <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+              <LinkedIn sx={{ fontSize: 24 }} />
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="cursor-pointer text-gray-400 hover:text-gray-800">
+              <BookmarkAddOutlined sx={{ fontSize: 24 }} />
+            </div>
+            <div className="-rotate-90 text-gray-400 cursor-pointer hover:text-gray-800">
+              <Link href="#comment">
+                <ModeCommentOutlined sx={{ fontSize: 24 }} />
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center pb-10 pt-10 border-t border-gray-300">
+          <img
+            className="w-28 h-28 rounded-full"
+            src={urlFor(post.author.image).url()}
+            alt="author avatar"
+          />
+          <div className="pl-5">
+            <h4 className="text-3xl font-bold">{post.author.name}</h4>
+
+            <p className="font-extralight text-md">
+              Published&nbsp;
+              <TimeAgo
+                className="text-sm text-gray-500"
+                date={post._createdAt}
+              />
+            </p>
+          </div>
+        </div>
       </article>
-      <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
+      <hr className="max-w-3xl my-5 mx-auto border border-yellow-500" />
       {submitted ? (
         <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
           <h3 className="text-3xl font-bold">
@@ -169,13 +255,13 @@ function Post({ post }: Props) {
         </form>
       )}
       {/* Comments */}
-      <div className="flex flex-col p-10 my-10 max-w-2xl mx-auto shadow shadow-yellow-500 ">
+      <div className="flex flex-col p-10 my-10 max-w-3xl mx-auto shadow shadow-yellow-500 ">
         <h3 className="text-4xl">Comments</h3>
         <hr className="pb-2" />
         {post.comments.map((comment) => (
           <div key={comment._id} className="">
             <p>
-              <span className="text-yellow-500">{comment.name}:</span>
+              <span className="text-yellow-500">{comment.name}:</span>&nbsp;
               {comment.comment}
             </p>
           </div>

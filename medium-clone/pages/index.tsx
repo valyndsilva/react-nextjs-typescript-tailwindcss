@@ -1,24 +1,25 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import Header from '../components/Header'
-import { sanityClient, urlFor } from '../lib/sanity'
-import { Post } from '../typings'
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import Header from '../components/Header';
+import { sanityClient, urlFor } from '../lib/sanity';
+import { Post } from '../typings';
 
 interface Props {
-  posts: [Post] // array of type Post: Post[] or [Post]
+  posts: [Post]; // array of type Post: Post[] or [Post]
 }
 
 export default function Home({ posts }: Props) {
-  console.log(posts)
+  console.log(posts);
   return (
     // <div className="flex min-h-screen flex-col items-center justify-center py-2">
-    <div className="max-w-7xl mx-auto">
+    <div className="">
       <Head>
         <title>Medium Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <div className="flex justify-between items-center bg-yellow-400 border-y border-black py-10 lg:py-0 ">
+      <Header color="bg-medium" />
+      <div className="flex justify-between items-center bg-medium border-y border-black px-20 py-10 lg:py-0 ">
         <div className="px-10 space-y-5">
           <h1 className="text-6xl max-w-xl font-serif">
             <span className="underline decoration-black decoration-4 ">
@@ -29,6 +30,9 @@ export default function Home({ posts }: Props) {
           <h2>
             Discover stories, thinking, and expertise from writers on any topic.
           </h2>
+          <div className="w-44  cursor pointer items-center text-center  bg-black text-white border-black-600 px-4 py-2 rounded-full ">
+            <Link href="/">Start reading</Link>
+          </div>
         </div>
 
         <img
@@ -37,7 +41,7 @@ export default function Home({ posts }: Props) {
         />
       </div>
       {/* Posts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 lg:p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 max-w-7xl mt-10 mx-auto lg:p-6">
         {posts.map((post) => (
           <Link key={post._id} href={`/post/${post.slug.current}`}>
             <div className="group cursor-pointer border rounded-lg overflow-hidden">
@@ -65,8 +69,18 @@ export default function Home({ posts }: Props) {
           </Link>
         ))}
       </div>
+      <footer className="flex h-24 w-full items-center justify-center border-t">
+        <a
+          className="flex items-center justify-center gap-2"
+          href=""
+          target="_blank"
+        >
+          Powered by
+          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+        </a>
+      </footer>
     </div>
-  )
+  );
 }
 
 // Implementing SSR
@@ -83,12 +97,12 @@ export const getServerSideProps = async () => {
   },
   description,
   mainImage
-  }`
+  }`;
 
-  const posts = await sanityClient.fetch(query)
+  const posts = await sanityClient.fetch(query);
   return {
     props: {
       posts,
     },
-  }
-}
+  };
+};
