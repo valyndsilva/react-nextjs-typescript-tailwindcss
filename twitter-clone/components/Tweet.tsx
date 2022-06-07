@@ -30,7 +30,7 @@ function Tweet({ tweet }: Props) {
   }
   // const src = urlFor(tweet.profileImage!).url(); // url() method stringifies the image url
   const src = tweet.profileImage!; // url() method stringifies the image url
-  console.log(src);
+  // console.log(src);
 
   const { data: session } = useSession();
 

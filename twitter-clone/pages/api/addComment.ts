@@ -9,8 +9,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data: CommentBody = JSON.parse(req.body);
-  console.log(data.tweetId);
+  try {
+    const data: CommentBody = JSON.parse(req.body);
+    console.log(data.tweetId);
+  } catch (err) {
+    // 👇️ This runs
+    console.log("Error: ", err as Error);
+  }
 
   // mutations sends instruction to the backend and tells the backend how to update the data
   // https://www.sanity.io/docs/http-mutations
