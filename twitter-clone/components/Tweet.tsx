@@ -33,7 +33,7 @@ function Tweet({ tweet }: Props) {
   // console.log(src);
 
   const { data: session } = useSession();
-  console.log(session);
+  console.log(session!.user);
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
