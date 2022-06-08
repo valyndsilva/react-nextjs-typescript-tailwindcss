@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Feed from "../components/Feed";
@@ -46,9 +46,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // Here all the information that is needed to pre-fetch is passed as the props to the component
   // It changes the homepage route to SSR route
   const tweets = await fetchTweets();
+
   return {
     props: {
       tweets,
     },
   };
 };
+
+// // (Static Site Generation):When NextJS tries to pre-build/ pre-fetch the page we need to tell how to use the post slug or id to fetch the info.
+// // Go to each page and getStaticProps:
+// export const getStaticProps: GetStaticProps = async () => {
+//   const tweets = await fetchTweets();
+//   if (!tweets) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+//   return {
+//     props: {
+//       tweets,
+//     },
+//     revalidate: 60, // this enables ISR and updates the old cache version after 60 seconds
+//     // It basically server side renders the page after 60 seconds and caches it and that one gets served for the next 60 secs in a static way
+//   };
+// };
