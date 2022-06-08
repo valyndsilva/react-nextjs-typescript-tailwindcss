@@ -33,7 +33,7 @@ function Tweet({ tweet }: Props) {
   // console.log(src);
 
   const { data: session } = useSession();
-  console.log(session!.user);
+  // console.log(session!.user);
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
@@ -64,7 +64,7 @@ function Tweet({ tweet }: Props) {
       method: "POST",
     });
     const data = await result.json();
-    console.log(result);
+    console.log({ result });
     toast.success("Comment Posted!", {
       id: commentToast,
     });
@@ -116,19 +116,20 @@ function Tweet({ tweet }: Props) {
             />
           </div>
           <p className="pt-1">{tweet.text}</p>
-          {tweet.image && (
+          {tweet.tweetImage && (
             // <img
-            //   src={tweet.image}
+            //   src={tweet.tweetimage}
             //   alt="image"
             //   className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
             // />
             <div className="m-5 ml-0 mb-1 max-h-60 h-64 w-96 relative">
               <Image
                 className="rounded-lg object-cover shadow-sm"
-                src={tweet.image}
+                src={tweet.tweetImage}
                 alt=""
                 layout="fill" // required
                 objectFit="cover" // change to suit your needs
+                priority
               />
             </div>
           )}

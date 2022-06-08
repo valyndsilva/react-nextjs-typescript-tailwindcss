@@ -12,10 +12,9 @@ interface Props {
 
 // rename tweets to tweetsProp
 function Feed({ tweets: tweetsProp }: Props) {
-  
   // Replace the tweets that came from the SSR with the current ones from Sanity with handleRefresh.
   const [tweets, setTweets] = useState<Tweet[]>(tweetsProp);
-  // console.log(tweets);
+  console.log({ tweets });
 
   const handleRefresh = async () => {
     const refreshToast = toast.loading("Refreshing...");

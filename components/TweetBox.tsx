@@ -18,7 +18,7 @@ interface Props {
 }
 function TweetBox({ setTweets }: Props) {
   const { data: session } = useSession();
-  // console.log(session);
+  console.log({ session });
   // console.log(session?.user?.image);
 
   // Keep track if  the user entered something in the tweetbox:
@@ -45,7 +45,7 @@ function TweetBox({ setTweets }: Props) {
       text: input,
       username: session?.user?.name || "Unkown user",
       profileImage: session?.user?.image || "/avatar-icon.jpeg",
-      image: image,
+      tweetImage: image,
     };
     const result = await fetch("/api/addTweet", {
       body: JSON.stringify(tweetInfo), // strigify the JS object to be sent

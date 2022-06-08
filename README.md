@@ -18,8 +18,8 @@
 ```
 npx create-next-app -e with-tailwindcss twitter-clone
 cd twitter-clone
-yarn run dev
-yarn add @heroicons/react
+npm run dev
+npm install @heroicons/react
 ```
 
 Create components folder in root directory and create Sidebar.js and SidebarRow.js.
@@ -37,13 +37,13 @@ In tailwind.config.js add the twitter hex color to use in SidebarRow.js:
 For the widgets we use react-twitter-embed library: (https://www.npmjs.com/package/react-twitter-embed)
 
 ```
-yarn add react-twitter-embed
+npm install react-twitter-embed
 ```
 
 ### Install Sanity Studio:
 
 ```
-yarn global add @sanity/cli
+npm install -g @sanity/cli
 sanity login
 sanity init --coupon sonny2022
 Create dataset: Yes
@@ -59,7 +59,7 @@ Create tweet.js and comment.js.
 ### Next setup Sanity.io toolkit for Next.js: (https://github.com/sanity-io/next-sanity)
 
 In sanity-studio folder:
-yarn add next-sanity @portabletext/react @sanity/image-url
+npm install next-sanity @portabletext/react @sanity/image-url
 
 Next, create a folder called lib in root directory and 2 files in it called config.js and sanity.js.
 
@@ -125,7 +125,7 @@ Copy the token value and paste into SANITY_API_TOKEN in env.local
 After updating the .env.local restart in root directory:
 
 ```
-yarn run dev
+npm run dev
 ```
 
 ## Implementing Server-Side Rendering:
@@ -134,7 +134,7 @@ React loads the entire bundle on the users browser which takes long. Therefore S
 In SSR all the JS is handled on the server and the user gets the output of the response.
 NextJS gives us API endpoints out of the box.
 We will create an endpoint for fetching tweets and then fetch from our own server.
-Instead of contacting sanity directly from our browser we will create yarn endpoints and connect to these endpoints which then on our server makes communication to sanity. This is also a safer alternative.
+Instead of contacting sanity directly from our browser we will create npm endpoints and connect to these endpoints which then on our server makes communication to sanity. This is also a safer alternative.
 
 Open pages/index.tsx and add the special function called getServerSideProps
 Create a new folder called utils in root directory and a file called fetchTweets.tsx
@@ -160,12 +160,17 @@ export interface Tweet extends TweetBody {
 ```
 
 Install a package in the root directory folder:
-yarn add --dev next-sanity
+npm install --dev next-sanity
 
 Next create a new API endpoint in pages/api folder and called getTweets.ts
 
 ```
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+```
+
+npm install --save groq
+
+```
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sanityClient } from '../../lib/sanity';
 import { Tweet } from '../../typings';
@@ -204,7 +209,7 @@ NEXT_PUBLIC_BASE_URL=value (this will be localhost or url we deploy to)
 Restart server in root folder:
 
 ```
-yarn run dev
+npm run dev
 ```
 
 Next open utils/fetchTweets.ts:
@@ -247,8 +252,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ```
 
 Import react-timeago into root directory
-yarn add react-timeago
-yarn add --dev @types/react-timeago
+npm install react-timeago
+npm install --dev @types/react-timeago
 
 Create a new component called Tweet.tsx.
 Import it in Feed.tsx as TweetComponent to avoid clash with Tweet typings:
@@ -283,7 +288,7 @@ Update Tweet.tsx and Feed.tsx
 Next install react-hot-toast (https://react-hot-toast.com/)
 
 ```
-yarn add react-hot-toast
+npm install react-hot-toast
 ```
 
 In index.tsx
@@ -312,7 +317,7 @@ In the handleRefresh:
 ## Implemnt Twitter Login using NextAuth:
 
 ```
-yarn add next-auth
+npm install next-auth
 ```
 
 ### Add API route
@@ -377,7 +382,7 @@ TWITTER_CLIENT_SECRET=value
 ```
 
 Restart next dev server in root directory evrytime changes are made to the .env.local file:
-yarn run dev
+npm run dev
 
 ### Create a Github OAuth app:
 
@@ -395,7 +400,7 @@ GITHUB_CLIENT_SECRET=value
 ```
 
 Restart next dev server in root directory evrytime changes are made to the .env.local file:
-yarn run dev
+npm run dev
 
 ### Create a Google OAuth app:
 
@@ -421,7 +426,7 @@ GOOGLE_CLIENT_SECRET=value
 ```
 
 Restart next dev server in root directory evrytime changes are made to the .env.local file:
-yarn run dev
+npm run dev
 
 Now open TweetBox.tsx:
 Here we can use the users info after sign in to Google, Github or Twitter. Also, we can disable the tweet button if there is no input or there is no session (logged out)
@@ -627,7 +632,7 @@ To hide the scrollbar in Feed:
 (https://www.npmjs.com/package/tailwind-scrollbar-hide)
 
 ```
-yarn add tailwind-scrollbar-hide
+npm install tailwind-scrollbar-hide
 ```
 
 Next,open tailwind.config.js:
@@ -820,9 +825,14 @@ Next, go to https://vercel.com/guides/deploying-sanity-studio-with-vercel
 Note: You can skip this step if you already have a project set up.
 
 ```
-yarn add @sanity/cli
+npm install @sanity/cli
 sanity init (To initiate a new project and download the Studio code to your computer)
-sanity start (To start a local development server, cd into the project folder)
+Your project name: project-name
+default config?: y
+project output path: studio
+project template schema: Blog schema
+Open sanity.io/manage and copy the projectId: and dataset:production into .env.local
+cd into the project studio folder: sanity start (To start a local development server, cd into the project folder)
 ```
 
 #### Step 2: Preparing for Deployment
@@ -894,13 +904,13 @@ To add a CORS origin from your management console:
 ESLint Configuration Setup for NextJS:
 
 ```
-yarn run next lint
+npm run next lint
 ```
 
 To remove incorrect peer dependency errors:
 
 ```
-yarn upgrade
+npm upgrade
 ```
 
 ## Deploying Next.JS App on Netlify:
@@ -909,7 +919,7 @@ Steps: https://www.netlify.com/blog/2021/05/04/migrating-an-existing-next.js-pro
 To enable server-side rendering and other framework-specific features in your builds install Essential Next Plugin by netlify or manually install it with the command below: (https://github.com/netlify/netlify-plugin-nextjs)
 
 ```
-yarn add @netlify/plugin-nextjs
+npm install @netlify/plugin-nextjs
 ```
 
 Next, Create a netlify.toml file and include the script below:
@@ -924,6 +934,6 @@ package = "@netlify/plugin-nextjs"
 ```
 
 Deploy Settings:
-Build command: yarn run build
+Build command: npm run build
 
 Deploy. :slightly_smiling_face:

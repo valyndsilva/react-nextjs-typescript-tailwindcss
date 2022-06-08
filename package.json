@@ -11,7 +11,7 @@
     "@netlify/plugin-nextjs": "^4.7.1",
     "@sanity/cli": "^2.30.0",
     "csstype": "^3.1.0",
-    "export": "^0.1.337",
+    "groq": "^2.29.3",
     "next": "latest",
     "next-auth": "^4.3.4",
     "next-sanity-image": "^3.2.1",
