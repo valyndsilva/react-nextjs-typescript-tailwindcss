@@ -11,27 +11,11 @@ import { fetchComments } from "../utils/fetchComments";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import imageUrlBuilder from "@sanity/image-url";
-import { ImageUrlBuilder } from "next-sanity-image";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { sanityClient } from "../lib/sanity";
 interface Props {
   tweet: Tweet;
 }
 function Tweet({ tweet }: Props) {
-  // Get a pre-configured url-builder from your sanity client
-  const builder = imageUrlBuilder(sanityClient);
-
-  // Then we like to make a simple function like this that gives the
-  // builder an image and returns the builder for you to specify additional
-  // parameters:
-  function urlFor(source: SanityImageSource) {
-    return builder.image(source);
-  }
-  // const src = urlFor(tweet.profileImage!).url(); // url() method stringifies the image url
-  const src = tweet.profileImage!; // url() method stringifies the image url
-  // console.log(src);
-
   const { data: session } = useSession();
   // console.log(session!.user);
 
@@ -96,8 +80,7 @@ function Tweet({ tweet }: Props) {
           /> */}
           <Image
             className=" rounded-full object-cover"
-            loader={() => src}
-            src={src}
+            src={tweet.profileImage!}
             unoptimized
             alt=""
             layout="fill" // required
