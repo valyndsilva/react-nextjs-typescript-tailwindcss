@@ -786,8 +786,8 @@ cd sanity-studio
 sanity deploy
 ```
 
-Give a studio hostname: sanity-studio-twitter-clone
-It's deployed to: https://sanity-studio-twitter-clone.sanity.studio/
+Give a studio hostname: twitter-sanity-clone
+It's deployed to: https://twitter-sanity-clone.sanity.studio/
 
 ### Deploy the NextJS app to github and trigger vercel deploy hooks:
 
