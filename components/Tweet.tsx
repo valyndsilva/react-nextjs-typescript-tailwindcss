@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Comment, CommentBody, Tweet } from "../typings";
-import TimeAgo from "react-timeago";
+import Moment from "react-moment";
+import "moment-timezone";
 import {
   ChatAlt2Icon,
   SwitchHorizontalIcon,
@@ -93,10 +94,9 @@ function Tweet({ tweet }: Props) {
             <p className="hidden text-sm text-gray-500 sm:inline">
               @{tweet.username.replace(/\s+/g, "").toLowerCase()} ·
             </p>
-            <TimeAgo
-              className="text-sm text-gray-500"
-              date={tweet._createdAt}
-            />
+            <Moment fromNow className="text-sm text-gray-500">
+              {tweet._createdAt}
+            </Moment>
           </div>
           <p className="pt-1">{tweet.text}</p>
           {tweet.tweetImage && (
@@ -183,11 +183,10 @@ function Tweet({ tweet }: Props) {
                   <p className="hidden text-sm text-gray-500 lg:inline">
                     @{comment.username.replace(/\s+/g, "").toLowerCase()} ·
                   </p>
-
-                  <TimeAgo
-                    className="text-sm text-gray-500"
-                    date={comment._createdAt}
-                  />
+                  ·
+                  <Moment fromNow className="text-sm text-gray-500">
+                    {comment._createdAt}
+                  </Moment>
                 </div>
                 <p>{comment.comment}</p>
               </div>
